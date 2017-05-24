@@ -1,12 +1,11 @@
 package hr.fer.ztel.zother
 
-import java.io.FileWriter
-
 import hr.fer.ztel.thesis.datasource.ModelValidator
-
+import java.io.FileWriter
 import scala.io.Source
 
-object ScalaItemItemIndexer extends Serializable {
+object ScalaIndexer extends Serializable {
+
   def transformItemIdsToIndexes(inputPath : String, outputPath : String, lookupPath : String) : Unit = {
 
     var lineCounter = 0

@@ -145,8 +145,6 @@ void indexize_customer_item(string input_path, map<int, int>& items_lookup) {
     fclose(lookup_output);
 }
 
-// g++ -static -std=c++11 -O3 matrix_entries_indexer.cpp -o indexer.exe
-
 int main(int argc, char* argv[]) {
 
     if (argc != 3) {
