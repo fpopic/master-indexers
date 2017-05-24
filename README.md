@@ -1,6 +1,7 @@
 #### Usage:
 
-Used to preprocess input files on single machine because it constructs shared dictionaries (sync needed on multicore) and maps ids to indexes. 
+Used to preprocess input files on single machine because it constructs shared dictionaries \
+(sync for mutable collection needed on multicore) and maps ids to indexes. 
 
 Scala time > 45 min (only item-item matrix)\
 C++   time < 5 min  (both matrices)

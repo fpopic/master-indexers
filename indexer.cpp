@@ -148,7 +148,7 @@ void indexize_customer_item(string input_path, map<int, int>& items_lookup) {
 int main(int argc, char* argv[]) {
 
     if (argc != 3) {
-        printf("Wrong input args, accepting only: \"<exe> <item_item_output> <customer_item_input>\"\n");
+        printf("Wrong input args, accepting only: \"<exe> <item_item_input> <customer_item_input>\"\n");
         return -1;
     }
 
