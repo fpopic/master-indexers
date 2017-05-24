@@ -1,7 +1,10 @@
 #### Usage:
 
-Used to preprocess input files on single machine because it constructs shared dictionaries \
-(sync for mutable collection needed on multicore) and maps ids to indexes. 
+Used to preprocess input files on single machine because it constructs shared lookup table \
+(sync for mutable collection needed on multicore) and maps ids to indices \
+(e.g. customerId => customerIndex, itemId => itemIndex) and saves the file with it's lookup table. 
+
+Indices are prefered over ids because linear algebra libraries operate with indices (continued ).
 
 Scala time > 45 min (only item-item matrix)\
 C++   time < 5 min  (both matrices)
@@ -21,7 +24,7 @@ cmake --build cmake-build-debug --target indexer -- -j 4
 
 #### Run:
 
-``./indexer <item_item_output> <customer_item_input>``
+``./indexer <item_item_input> <customer_item_input>``
 
 Output files will be in the same folder as input with .indexed and .lookup suffix.
 
