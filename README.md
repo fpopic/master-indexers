@@ -4,7 +4,7 @@ Used to preprocess input files on single machine because it constructs shared lo
 (sync for mutable collection needed on multicore) and maps ids to indices \
 (e.g. customerId => customerIndex, itemId => itemIndex) and saves the file with it's lookup table. 
 
-Indices are prefered over ids because linear algebra libraries operate with indices (continued ).
+Indices are prefered over ids because linear algebra libraries operate with indices.
 
 Scala time > 45 min (only item-item matrix)\
 C++   time < 5 min  (both matrices)
