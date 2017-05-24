@@ -1,10 +1,10 @@
-package hr.fer.ztel.zother
+package hr.fer.ztel.other
 
-import hr.fer.ztel.thesis.datasource.ModelValidator
+import hr.fer.ztel.thesis.datasource.ModelValidator // missing, in master_thesis project
 import java.io.FileWriter
 import scala.io.Source
 
-object ScalaIndexer extends Serializable {
+object ItemItemIndexer extends Serializable {
 
   def transformItemIdsToIndexes(inputPath : String, outputPath : String, lookupPath : String) : Unit = {
 

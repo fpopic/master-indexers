@@ -7,11 +7,20 @@ C++   time < 5 min  (both matrices)
 
 #### Compile:
 
-```g++ -static -std=c++11 -O3 matrix_entries_indexer.cpp -o indexer```
+using g++:
+
+```g++ -static -std=c++11 -O3 indexer.cpp -o indexer```
+
+or with cmake:
+
+```
+mkdir cmake-build-debug
+cmake --build cmake-build-debug --target indexer -- -j 4
+```
 
 #### Run:
 
-```./indexer <item_item_output> <customer_item_input>```
+``./indexer <item_item_output> <customer_item_input>``
 
 Output files will be in the same folder as input with .indexed and .lookup suffix.
 
