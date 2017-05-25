@@ -1,8 +1,8 @@
 #### Usage:
 
-Used to preprocess input files on single machine because it constructs shared lookup table \
-(sync for mutable collection needed on multicore) and maps ids to indices \
-(e.g. customerId => customerIndex, itemId => itemIndex) and saves the file with it's lookup table. 
+Used to preprocess input files on a single machine because it constructs shared lookup table \
+(sync for mutable collection needed on multicore), maps ids to indices \
+(e.g. customerId => customerIndex, itemId => itemIndex) and saves to a file with it's lookup table. 
 
 Indices are prefered over ids because linear algebra libraries operate with indices.
 
