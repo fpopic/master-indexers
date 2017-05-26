@@ -68,7 +68,7 @@ Output files will be in the same folder as input with .unindexed suffix formated
 
 ```"customerIndex:itemIndex1,itemIndex2,...,itemIndexX"```
  
-where k  is number of top recommendation for a customer, so 0 <= X <= k
+where k is the number of top k recommendations for a customer, so 0 <= X <= k
 
 #### Output:
 ```
