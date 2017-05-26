@@ -8,3 +8,5 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -static -std=c++11 -O3")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}")
 
 add_executable(indexer indexer.cpp)
+add_executable(unindexer unindexer.cpp)
+
