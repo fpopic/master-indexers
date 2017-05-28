@@ -5,7 +5,7 @@
 #include <cstdio>
 #include <cmath>
 #include <chrono>
-#include <map>
+#include <unordered_map>
 
 #define likely(x)       __builtin_expect((x),1)
 #define unlikely(x)     __builtin_expect((x),0)
@@ -15,17 +15,23 @@ using namespace std;
 typedef chrono::high_resolution_clock Time;
 typedef chrono::duration<float> fsec;
 
-inline bool contains(map<int, int>& map, int key) { return map.find(key) != map.end(); }
+template<typename K, typename V>
+using hmap = unordered_map<K, V>;
 
-void indexize_item_item(string input_path, map<int, int>& items_lookup) {
+inline bool contains(hmap<int, int>& map, int key) { return map.find(key) != map.end(); }
+
+void indexize_item_item(string input_path, hmap<int, int>& items_lookup) {
     auto start = Time::now();
 
     string output_path = input_path + ".indexed";
     string lookup_output_path = input_path + ".lookup";
+    string lookup_size_output_path = input_path + ".lookup.size";
 
     FILE* input = fopen(input_path.c_str(), "r");
     FILE* output = fopen(output_path.c_str(), "w+");
     FILE* lookup_output = fopen(lookup_output_path.c_str(), "w+");
+    FILE* lookup_size_output = fopen(lookup_size_output_path.c_str(), "w+");
+
 
     int counter = 0;
 
@@ -66,6 +72,7 @@ void indexize_item_item(string input_path, map<int, int>& items_lookup) {
     for (const auto& entry : items_lookup) {
         fprintf(lookup_output, "%d,%d\n", entry.first, entry.second);
     }
+    fprintf(lookup_size_output, "%d", (int) items_lookup.size());
 
     printf("Lookup file with %d entries saved.\n", (int) items_lookup.size());
 
@@ -75,9 +82,10 @@ void indexize_item_item(string input_path, map<int, int>& items_lookup) {
     fclose(input);
     fclose(output);
     fclose(lookup_output);
+    fclose(lookup_size_output);
 }
 
-void indexize_customer_item(string input_path, map<int, int>& items_lookup) {
+void indexize_customer_item(string input_path, hmap<int, int>& items_lookup) {
     auto start = Time::now();
 
     string output_path = input_path + ".indexed";
@@ -88,7 +96,7 @@ void indexize_customer_item(string input_path, map<int, int>& items_lookup) {
     FILE* lookup_output = fopen(lookup_output_path.c_str(), "w+");
 
     int counter = 0;
-    map<int, int> customers_lookup; // <customer_id, customer_index>
+    hmap<int, int> customers_lookup; // <customer_id, customer_index>
 
     int parsed, line_counter = 0;
 
@@ -152,7 +160,7 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    map<int, int> items_lookup; // <item_id, item_index>
+    hmap<int, int> items_lookup; // <item_id, item_index>
 
     indexize_item_item(argv[1], items_lookup);
 
