@@ -4,9 +4,9 @@
 
 #include <cstdio>
 #include <chrono>
-#include <map>
 #include <vector>
 #include <sstream>
+#include <unordered_map>
 
 #define likely(x)       __builtin_expect((x),1)
 #define unlikely(x)     __builtin_expect((x),0)
@@ -15,6 +15,9 @@ using namespace std;
 
 typedef chrono::high_resolution_clock Time;
 typedef chrono::duration<float> fsec;
+
+template<typename K, typename V>
+using hmap = unordered_map<K, V>;
 
 void split(const string& str, const char& del, vector<string>& tokens) {
     stringstream ss;
@@ -27,7 +30,7 @@ void split(const string& str, const char& del, vector<string>& tokens) {
     }
 }
 
-inline bool contains(map<int, int>& map, int key) { return map.find(key) != map.end(); }
+inline bool contains(hmap<int, int>& map, int key) { return map.find(key) != map.end(); }
 
 void unindexize_recommendations(string input_path, string customers_lookup_path, string items_lookup_path) {
     auto start = Time::now();
@@ -35,7 +38,7 @@ void unindexize_recommendations(string input_path, string customers_lookup_path,
     // reading items lookup
 
     FILE* items_lookup_file = fopen(items_lookup_path, "r");
-    map<int, int> items_lookup; // <index, id>
+    hmap<int, int> items_lookup; // <index, id>
     int itemId, itemIndex;
     while (fscanf(items_lookup_file, "%d,%d\n", &itemId, &itemIndex) == 2) {
         items_lookup[itemIndex] = itemId;
@@ -45,7 +48,7 @@ void unindexize_recommendations(string input_path, string customers_lookup_path,
     // reading customers lookup
 
     FILE* customers_lookup_file = fopen(customers_lookup_path, "r");
-    map<int, int> customers_lookup; // <index, id>
+    hmap<int, int> customers_lookup; // <index, id>
     int customerId, customerIndex;
     while (fscanf(customers_lookup_file, "%d,%d\n", &customerId, &customerIndex) == 2) {
         customers_lookup[customerIndex] = customerId;
