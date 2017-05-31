@@ -9,4 +9,3 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}")
 
 add_executable(indexer indexer.cpp)
 add_executable(unindexer unindexer.cpp)
-

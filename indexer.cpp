@@ -113,7 +113,7 @@ void indexize_customer_item(string input_path, hmap<int, int>& items_lookup) {
             customerIndex = contains(customers_lookup, customerId)
                             ? customers_lookup.at(customerId)
                             : (customers_lookup[customerId] = counter++);
-            fprintf(output, "%d,%d,%lf\n", customerIndex, itemIndex, quantity);
+            fprintf(output, "%d,%s,%d,%lf\n", customerIndex, date, itemIndex, quantity); //todo OVO OVDJE PROVJERI JEL I DOLJE DODAN DATE I JEL SE DOBRO ZAPISUJE U DATOTEKU
         }
         else {
             char chr;
