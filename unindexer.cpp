@@ -1,5 +1,5 @@
 //
-// Created by fpopic on 26.05.17..
+// Created by fpopic on 26.05.17.
 //
 
 #include <cstdio>

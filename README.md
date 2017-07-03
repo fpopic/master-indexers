@@ -18,7 +18,7 @@ using g++:
 
 ```
 g++ -static -std=c++11 -O3 indexer.cpp -o indexer
-g++ -static -std=c++11 -O3 unindexer.cpp -o indexer
+g++ -static -std=c++11 -O3 unindexer.cpp -o unindexer
 ```
 
 

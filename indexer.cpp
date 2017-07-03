@@ -1,5 +1,5 @@
 //
-// Created by fpopic on 24.05.17..
+// Created by fpopic on 24.05.17.
 //
 
 #include <cstdio>
@@ -31,7 +31,6 @@ void indexize_item_item(string input_path, hmap<int, int>& items_lookup) {
     FILE* output = fopen(output_path.c_str(), "w+");
     FILE* lookup_output = fopen(lookup_output_path.c_str(), "w+");
     FILE* lookup_size_output = fopen(lookup_size_output_path.c_str(), "w+");
-
 
     int counter = 0;
 
@@ -85,35 +84,38 @@ void indexize_item_item(string input_path, hmap<int, int>& items_lookup) {
     fclose(lookup_size_output);
 }
 
-void indexize_customer_item(string input_path, hmap<int, int>& items_lookup) {
+void indexize_user_item(string input_path, hmap<int, int>& items_lookup) {
     auto start = Time::now();
 
     string output_path = input_path + ".indexed";
     string lookup_output_path = input_path + ".lookup";
+    string lookup_size_output_path = input_path + ".lookup.size";
 
     FILE* input = fopen(input_path.c_str(), "r");
     FILE* output = fopen(output_path.c_str(), "w+");
     FILE* lookup_output = fopen(lookup_output_path.c_str(), "w+");
+    FILE* lookup_size_output = fopen(lookup_size_output_path.c_str(), "w+");
+
 
     int counter = 0;
-    hmap<int, int> customers_lookup; // <customer_id, customer_index>
+    hmap<int, int> users_lookup; // <user_id, user_index>
 
     int parsed, line_counter = 0;
 
-    int customerId;
+    int userId;
     char date[10]; // dd/mm/yyyy
     int itemId;
     double quantity;
 
-    int customerIndex, itemIndex;
+    int userIndex, itemIndex;
 
-    while ((parsed = fscanf(input, "%d,%[^,],%d,%lf\n", &customerId, &date[0], &itemId, &quantity)) != -1) {
+    while ((parsed = fscanf(input, "%d,%[^,],%d,%lf\n", &userId, &date[0], &itemId, &quantity)) != -1) {
         if (likely(parsed == 4)) {
             itemIndex = items_lookup.at(itemId); // must exist
-            customerIndex = contains(customers_lookup, customerId)
-                            ? customers_lookup.at(customerId)
-                            : (customers_lookup[customerId] = counter++);
-            fprintf(output, "%d,%s,%d,%lf\n", customerIndex, date, itemIndex, quantity); //todo OVO OVDJE PROVJERI JEL I DOLJE DODAN DATE I JEL SE DOBRO ZAPISUJE U DATOTEKU
+            userIndex = contains(users_lookup, userId)
+                        ? users_lookup.at(userId)
+                        : (users_lookup[userId] = counter++);
+            fprintf(output, "%d,%s,%d,%lf\n", userIndex, date, itemIndex, quantity);
         }
         else {
             char chr;
@@ -139,11 +141,12 @@ void indexize_customer_item(string input_path, hmap<int, int>& items_lookup) {
 
     printf("Output file with %d lines saved.\n", line_counter);
 
-    for (const auto& entry : customers_lookup) {
+    for (const auto& entry : users_lookup) {
         fprintf(lookup_output, "%d,%d\n", entry.first, entry.second);
     }
+    fprintf(lookup_size_output, "%d", (int) users_lookup.size());
 
-    printf("Lookup file with %d entries saved.\n", (int) customers_lookup.size());
+    printf("Lookup file with %d entries saved.\n", (int) users_lookup.size());
 
     fsec elapsed_seconds = Time::now() - start;
     printf("Time: %ds\n", (int) floor(elapsed_seconds.count()));
@@ -151,12 +154,13 @@ void indexize_customer_item(string input_path, hmap<int, int>& items_lookup) {
     fclose(input);
     fclose(output);
     fclose(lookup_output);
+    fclose(lookup_size_output);
 }
 
 int main(int argc, char* argv[]) {
 
     if (argc != 3) {
-        printf("Wrong input args, accepting only: \"<exe> <item_item_input> <customer_item_input>\"\n");
+        printf("Wrong input args, accepting only: \"<exe> <item_item_input> <user_item_input>\"\n");
         return -1;
     }
 
@@ -166,7 +170,7 @@ int main(int argc, char* argv[]) {
 
     printf("\n");
 
-    indexize_customer_item(argv[2], items_lookup);
+    indexize_user_item(argv[2], items_lookup);
 
     return 0;
 }
