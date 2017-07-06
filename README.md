@@ -3,7 +3,7 @@
 Used to preprocess input files on a single machine (because it constructs shared lookup table, 
 therefore synchronisation and locking for mutable collection are needed on a multicore-distributed environment).
  
-It maps ids to indices (e.g. customerId => customerIndex, itemId => itemIndex) and saves results to a file with it's lookup table. 
+It maps ids to indices (e.g. userId => userIndex, itemId => itemIndex) and saves results to a file with it's lookup table. 
 
 Indices are prefered over ids because linear algebra libraries operate with indices.
 
@@ -32,7 +32,7 @@ cmake --build cmake-build-debug --target unindexer -- -j 4
 
 #### Run indexer:
 
-```./indexer <item_item_input> <customer_item_input>```
+```./indexer <item_item_input> <user_item_input>```
 
 Output files will be in the same folder as input with .indexed and .lookup suffix.
 
@@ -46,7 +46,7 @@ Output file with 71930771 lines saved.
 Lookup file with 67052 entries saved.
 Time: 166s
 
-Header: customerId,date,itemId,quantity
+Header: userId,date,itemId,quantity
 Processed lines:1000000
 ...
 Processed lines:29000000
@@ -59,17 +59,17 @@ Process finished with exit code 0
 
 #### Run unindexer:
 
-```./unindexer <recommendations_input> <customers_lookup_input> <items_lookup_input>```
+```./unindexer <recommendations_input> <users_lookup_input> <items_lookup_input>```
 
 <recommendations_input> file must be formated like:
 
-```"customerId:itemId1,itemId2,...,itemIdX"```
+```"userId:itemId1,itemId2,...,itemIdX"```
 
 Output files will be in the same folder as input with .unindexed suffix formated like:
 
-```"customerIndex:itemIndex1,itemIndex2,...,itemIndexX"```
+```"userIndex:itemIndex1,itemIndex2,...,itemIndexX"```
  
-where k is the number of top k recommendations for a customer, so 0 <= X <= k
+where k is the number of top k recommendations for a user, so 0 <= X <= k
 
 #### Output:
 ```

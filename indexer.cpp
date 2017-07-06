@@ -7,6 +7,8 @@
 #include <chrono>
 #include <unordered_map>
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "ClangTidyInspection"
 #define likely(x)       __builtin_expect((x),1)
 #define unlikely(x)     __builtin_expect((x),0)
 
@@ -20,12 +22,12 @@ using hmap = unordered_map<K, V>;
 
 inline bool contains(hmap<int, int>& map, int key) { return map.find(key) != map.end(); }
 
-void indexize_item_item(string input_path, hmap<int, int>& items_lookup) {
+void indexize_item_item(const string& input_path, hmap<int, int>& items_lookup) {
     auto start = Time::now();
 
     string output_path = input_path + ".indexed";
-    string lookup_output_path = input_path + ".lookup";
-    string lookup_size_output_path = input_path + ".lookup.size";
+    string lookup_output_path = input_path + ".indexed.lookup";
+    string lookup_size_output_path = input_path + ".indexed.lookup.size";
 
     FILE* input = fopen(input_path.c_str(), "r");
     FILE* output = fopen(output_path.c_str(), "w+");
@@ -88,8 +90,8 @@ void indexize_user_item(string input_path, hmap<int, int>& items_lookup) {
     auto start = Time::now();
 
     string output_path = input_path + ".indexed";
-    string lookup_output_path = input_path + ".lookup";
-    string lookup_size_output_path = input_path + ".lookup.size";
+    string lookup_output_path = input_path + ".indexed.lookup";
+    string lookup_size_output_path = input_path + ".indexed.lookup.size";
 
     FILE* input = fopen(input_path.c_str(), "r");
     FILE* output = fopen(output_path.c_str(), "w+");
@@ -174,3 +176,4 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
+#pragma clang diagnostic pop

@@ -8,6 +8,8 @@
 #include <sstream>
 #include <unordered_map>
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "ClangTidyInspection"
 #define likely(x)       __builtin_expect((x),1)
 #define unlikely(x)     __builtin_expect((x),0)
 
@@ -32,12 +34,12 @@ void split(const string& str, const char& del, vector<string>& tokens) {
 
 inline bool contains(hmap<int, int>& map, int key) { return map.find(key) != map.end(); }
 
-void unindexize_recommendations(string input_path, string customers_lookup_path, string items_lookup_path) {
+void unindexize_recommendations(const string& input_path, const string& customers_lookup_path, const string& items_lookup_path) {
     auto start = Time::now();
 
     // reading items lookup
 
-    FILE* items_lookup_file = fopen(items_lookup_path, "r");
+    FILE* items_lookup_file = fopen(items_lookup_path.c_str(), "r");
     hmap<int, int> items_lookup; // <index, id>
     int itemId, itemIndex;
     while (fscanf(items_lookup_file, "%d,%d\n", &itemId, &itemIndex) == 2) {
@@ -47,7 +49,7 @@ void unindexize_recommendations(string input_path, string customers_lookup_path,
 
     // reading customers lookup
 
-    FILE* customers_lookup_file = fopen(customers_lookup_path, "r");
+    FILE* customers_lookup_file = fopen(customers_lookup_path.c_str(), "r");
     hmap<int, int> customers_lookup; // <index, id>
     int customerId, customerIndex;
     while (fscanf(customers_lookup_file, "%d,%d\n", &customerId, &customerIndex) == 2) {
@@ -66,9 +68,9 @@ void unindexize_recommendations(string input_path, string customers_lookup_path,
     int line_number = 0;
     vector<string> parts;
 
-    while (fscanf("%d:%[^n]", &customerIndex, line) == 2) {
+    while (fscanf(input_file, "%d:%[^n]", &customerIndex, line) == 2) {
         customerId = customers_lookup.at(customerIndex);
-        fprintf(output_path, "%d:", customerId);
+        fprintf(output_file, "%d:", customerId);
 
         split(line, ',', parts);
         for (int i = 0; i < parts.size(); ++i) {
@@ -106,3 +108,5 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
+
+#pragma clang diagnostic pop
